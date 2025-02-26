@@ -8,7 +8,7 @@ env:
 
 jobs:
   build:
-    if: github.repository_owner == 'Test-Prep-AI'
+    if: github.repository_owner == 'Test-Prep-AI' && github.ref == 'refs/heads/main'
     name: Build
     runs-on: ubuntu-22.04
     permissions:
