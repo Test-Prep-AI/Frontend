@@ -1,0 +1,74 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+      sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: #E2EBF3;
+  }
+
+#root {
+    width: 100%;
+    height:  100%;
+}
+
+.app {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;       /* 수직 중앙 정렬 */
+    justify-content: center;   /* 수평 중앙 정렬 */
+}
+
+.homeContainer {
+    width: 90%;
+    min-width: 1000px;              
+    max-width: 90vw;       
+    height: 90%;
+    min-height: 600px;       
+    background-color: #C1DEFF;  
+    border-radius: 30px;    
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
+    display: flex;           /* 박스 내부 요소를 가운데 정렬하기 위해 flex 사용 */
+    justify-content: left;
+    align-items: center;
+}
+
+.homeLeft {
+    width: 250px;
+    height: 100%;
+}
+
+.homeCard {
+    width: 100%;
+    min-width: 750px;
+    height: 100%;
+    background-color: #F8FAFC;
+    border-radius: 30px;     
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
+    position: relative; /* 화살표를 배치하기 위해 relative가 필요 */
+}
+
+/* 흰색 박스 왼쪽에 삼각형 화살표 디자인*/
+.homeCard::before {
+    content: "";
+    position: absolute;
+    left: -40px; 
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 30px 0 0 30px; /* 왼쪽 모서리만 둥글게 */
+
+    width: 0;
+    height: 0;
+
+    /* 삼각형 높이를 2배로 (40px) */
+    border-top: 40px solid transparent;
+    border-bottom: 40px solid transparent;
+
+    /* 삼각형 너비도 2배로 (40px) */
+    border-right: 40px solid #F8FAFC;
+}
