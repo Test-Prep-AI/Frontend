@@ -1,0 +1,40 @@
+.doneScreen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 80px;
+    
+    flex: 1; /* 부모 크기만큼 자동 확장 */
+}
+
+.lottie {
+    width: 450px;
+    height: auto;
+}
+
+.successMessage {
+    font-size: 20px;
+    margin-top: 50px;
+}
+
+
+.moveButton {
+    margin: 30px 0px;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 30px;
+  
+    background-color: #71A1DA; 
+    color: #fff;             
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+  
+    /* 살짝 그림자 */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.moveButton {
+    transform: translateY(-2px);
+}

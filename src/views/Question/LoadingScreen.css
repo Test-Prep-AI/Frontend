@@ -1,0 +1,18 @@
+.loadingScreen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 80px;
+    
+    flex: 1; /* 부모 크기만큼 자동 확장 */
+}
+
+.lottie {
+    width: 450px;
+    height: auto;
+}
+
+.loadingMessage {
+    font-size: 20px;
+    margin-top: 50px;
+}
