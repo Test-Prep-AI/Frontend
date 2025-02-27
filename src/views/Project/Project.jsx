@@ -145,10 +145,14 @@ export default function Project() {
     // 이전 문제로 이동
     const handlePrev = () => {
         setCurrentProblemIndex(prev => Math.max(prev - 1, 0));
+        //
+        //
     };
     // 다음 문제로 이동
     const handleNext = () => {
         setCurrentProblemIndex(prev => Math.min(prev + 1, problems.length - 1));
+        //
+        //
     };
 
     /* 정답 제출 핸들러 */
@@ -275,73 +279,68 @@ export default function Project() {
 
             <div className="project-content">
                 {problems.length > 0 ? (
-                    <div className="questionCard">
+                // 모든 문제 카드를 렌더링하고, 현재 문제만 active 클래스로 표시
+                <div className="questionCardsContainer">
+                    {problems.map((problem, index) => (
+                    <div
+                        key={problem.problemId}
+                        className={`questionCard ${index === currentProblemIndex ? "active" : "inactive"}`}
+                    >
                         <div className="question-content">
                         <div className="arrow-left" onClick={handlePrev}>{"<"}</div>
                         <div className="question-wrapper">
                             <div className="problem-title">
-                                문제 {currentProblem.problemId}. {currentProblem.problemTitle}
+                            문제 {problem.problemId}. {problem.problemTitle}
                             </div>
-                            {/* 문제 유형에 따라 입력 필드 다르게 표시 */}
-                            {currentProblem.problemType === "객관식" ? (
-                                    <div className="problem-options">
-                                        {currentProblem.options.map((option, index) => {
-                                            const letter = String.fromCharCode(97 + index);
-                                            return (
-                                                <label key={index} className="option-label">
-                                                    <input
-                                                        type="radio"
-                                                        name={`problem-${currentProblem.problemId}`}
-                                                        value={letter}
-                                                        onChange={(e) => setUserAnswer(e.target.value)}
-                                                    />
-                                                    {letter}. {option}
-                                                </label>
-                                            );
-                                        })}
-                                    </div>
-                                ) : currentProblem.problemType === "단답형" ? (
-                                    <div className="problem-input">
-                                        <input
-                                            type="text"
-                                            placeholder="정답 입력"
-                                            value={userAnswer}
-                                            onChange={(e) => setUserAnswer(e.target.value)}
-                                        />
-                                    </div>
-                                ) : (
-                                    // 서술형 문제의 경우에는 입력 필드를 표시하지만 결과 메시지는 출력하지 않음.
-                                    <div className="problem-input">
-                                        <input
-                                            type="text"
-                                            placeholder="정답 입력"
-                                            value={userAnswer}
-                                            onChange={(e) => setUserAnswer(e.target.value)}
-                                        />
-                                    </div>
-                                )}
+                            {problem.problemType === "객관식" ? (
+                            <div className="problem-options">
+                                {problem.options.map((option, index) => {
+                                const letter = String.fromCharCode(97 + index);
+                                return (
+                                    <label key={index} className="option-label">
+                                    <input
+                                        type="radio"
+                                        name={`problem-${problem.problemId}`}
+                                        value={letter}
+                                        onChange={(e) => setUserAnswer(e.target.value)}
+                                    />
+                                    {letter}. {option}
+                                    </label>
+                                );
+                                })}
+                            </div>
+                            ) : (
+                            <div className="problem-input">
+                                <input
+                                type="text"
+                                placeholder="정답 입력"
+                                value={userAnswer}
+                                onChange={(e) => setUserAnswer(e.target.value)}
+                                />
+                            </div>
+                            )}
                         </div>
                         <div className="arrow-right" onClick={handleNext}>{">"}</div>
                         </div>
-                        <button className="submit-answer-button" onClick={handleSubmitAnswer}>정답 제출</button>
-                        {((currentProblem.problemType === "객관식" || currentProblem.problemType === "단답형") && submissionResult) && (
-                            <div className="submission-result">{submissionResult}</div>
+                        <button className="submit-answer-button" onClick={handleSubmitAnswer}>
+                        정답 제출
+                        </button>
+                        {((problem.problemType === "객관식" || problem.problemType === "단답형") && submissionResult && index === currentProblemIndex) && (
+                        <div className="submission-result">{submissionResult}</div>
                         )}
                     </div>
-                    ) : (
-                    <p>문제가 없습니다.</p>
+                    ))}
+                </div>
+                ) : (
+                <p>문제가 없습니다.</p>
                 )}
 
-                {/* 정답 카드 */}
-                <div className='answerCard'>
-                    <div>
-                        정답
-                    </div>
-                    <div>
-                        해설
-                    </div>
+                <div className="answerCard">
+                <div>정답</div>
+                <div>해설</div>
                 </div>
             </div>
+
         </div>
     )
 }

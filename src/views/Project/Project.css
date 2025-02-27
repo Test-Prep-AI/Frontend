@@ -115,3 +115,19 @@
     line-height: 1.6;
   }
   
+
+  /* 모든 문제 카드를 감싸는 컨테이너 */
+.questionCardsContainer {
+    position: relative;
+  }
+  
+  /* 기본적으로 모든 questionCard는 숨김 처리 */
+  .questionCard {
+    display: none;
+  }
+  
+  /* active 클래스가 있는 카드만 보이게 설정 */
+  .questionCard.active {
+    display: block;
+  }
+  
