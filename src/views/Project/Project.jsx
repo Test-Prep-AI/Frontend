@@ -228,7 +228,7 @@ export default function Project() {
         if (problem.problemType === "객관식" || problem.problemType === "단답형") {
             setResults(prev => ({ ...prev, [problem.problemId]: isCorrect ? "정답이 맞습니다." : "정답이 아닙니다." }));
         } else if (problem.problemType === "서술형") {
-            setResults(prev => ({ ...prev, [problem.problemId]: "해설을 확인하세요." }));
+            setResults(prev => ({ ...prev, [problem.problemId]: "정답을 확인하세요." }));
         }
       }, 1000);
     }
@@ -282,6 +282,7 @@ export default function Project() {
                                     name={`problem-${problem.problemId}`}
                                     value={key}
                                     checked={answers[problem.problemId] === key}
+                                    className='radioStyle'
                                     onChange={(e) => handleAnswerChange(problem.problemId, e.target.value)}
                                     />
                                     {key}. {value}

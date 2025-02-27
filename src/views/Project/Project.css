@@ -1,13 +1,13 @@
 /* 전체 컨테이너 */
 .project-container {
-    flex: 1;
     display: flex;
     flex-direction: column;
     width: 100%;
     /* 부모의 높이를 꽉 채우고 싶다면? */
-    height: 100vh;  /* 또는 부모 컨테이너가 이미 flex:1 로 채워질 경우 100% */
+    height: 100%;  /* 또는 부모 컨테이너가 이미 flex:1 로 채워질 경우 100% */
     box-sizing: border-box;
     /* 만약 상위 레이아웃에서 이미 할당한 공간이 있다면, calc() 등을 써서 조절 */
+    padding: 50px;
   }
   
   /* 헤더: 프로젝트명 + 다운로드 버튼 */
@@ -16,6 +16,7 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
+    padding: 0 10px;
   }
   
   .project-title {
@@ -34,6 +35,7 @@
     font-size: 0.95rem;
     cursor: pointer;
     transition: background-color 0.3s;
+    margin: 0;
   }
   
   .download-button:hover {
@@ -63,10 +65,13 @@
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
   }
 
+  .questionCardsContainer{
+    padding: 10px;
+  }
+
   .questionCard{
     background-color: #fff;
     border-radius: 20px;
-    padding: 20px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     margin-top: 30px;
     padding: 40px;
@@ -100,7 +105,7 @@
   }
 
 .problem-title {
-    margin-bottom: 20px;
+    margin-bottom: 40px;
 }
   
 
@@ -126,7 +131,7 @@
 
 .submit-answer-button {
     background-color: #A0C4F5;
-    color: #fff;
+    color: white;
     border: none;
 }
 .submit-answer-button:hover {
@@ -145,24 +150,30 @@
   /* 정답 카드  */
 
 
-.answerCard p {
+.answerCard div {
     margin: 0;
-    color: #555;
+    color: #333;
     line-height: 1.6;
 }
   
 .submission-result {
     margin-bottom: 20px;
     font-size: 0.9rem;
-    padding-left: 20px;
+    padding-right: 20px;
+    text-align: right;
+}
+
+
+.problem-input {
+    width: 100%;
 }
 
 .problem-input input {
     width: 100%;
     padding: 12px 15px;  /* 세로/가로 여백 */
     font-size: 1rem;
-    border: 2px solid #ccc;  /* 연한 회색 테두리 */
-    border-radius: 10px;     /* 둥근 모서리 */
+    border: 1px solid #ccc;  /* 연한 회색 테두리 */
+    border-radius: 20px;     /* 둥근 모서리 */
     outline: none;
     transition: border-color 0.3s;
     box-sizing: border-box;
@@ -171,3 +182,24 @@
   .problem-input input:focus {
     border-color: #A0C4F5;  /* 포커스 시 테두리색 변경 */
   }
+
+
+  .problem-options {
+    display: flex;
+    flex-direction: column; /* 세로로 나열 */
+    gap: 8px;               /* 선택지 간 간격 (선택 사항) */
+}
+
+/* 스크롤바 스타일 (Chrome, Edge, Safari) */
+.project-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.project-content::-webkit-scrollbar-thumb {
+    background-color: rgba(215, 215, 215, 0.929);
+    border-radius: 10px;
+}
+
+.project-content::-webkit-scrollbar-track {
+    background: transparent;
+}
