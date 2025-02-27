@@ -14,6 +14,10 @@ export default function Project() {
     // 문제 목록
     const [problems, setProblems] = useState([]);
     const [error, setError] = useState('');
+    // 현재 보여줄 문제의 인덱스
+    const [currentProblemIndex, setCurrentProblemIndex] = useState(0);
+    // 사용자가 입력한 답 (객관식은 "a", "b", "c", "d", 단답형/서술형은 텍스트)
+    const [userAnswer, setUserAnswer] = useState('');
 
     /* 문제 목록 불러오기 요청 */
     useEffect(() => {
@@ -37,7 +41,7 @@ export default function Project() {
             .then(data => {
                 // 응답 데이터에서 problemList 저장 (없으면 빈 배열)
                 setProblems(data.problemList || []);
-                console.log('잘 저장함', data.problemList);
+                console.log('문제 목록 저장 완료:', data.problemList);
             })
             .catch(err => {
                 console.error("문제 목록 요청 실패:", err);
@@ -79,7 +83,7 @@ export default function Project() {
                     }
                 ];
                 setProblems(fakeProblems);
-                console.log('잘 저장함', fakeProblems);
+                console.log('문제 목록(테스트용) 저장 완료:', fakeProblems);
             }, 1000);
         }
     }, [projectId, IS_FAKE_MODE]);
@@ -139,10 +143,119 @@ export default function Project() {
         }
     };
 
+    // 이전 문제로 이동
+    const handlePrev = () => {
+        setCurrentProblemIndex(prev => Math.max(prev - 1, 0));
+    };
+    // 다음 문제로 이동
+    const handleNext = () => {
+        setCurrentProblemIndex(prev => Math.min(prev + 1, problems.length - 1));
+    };
+
+    /* 정답 제출 핸들러 */
+    const handleSubmitAnswer = async () => {
+        if (!problems.length) return;
+
+        const currentProblem = problems[currentProblemIndex];
+
+        if (!userAnswer) {
+            alert("답을 입력하세요.");
+            return;
+        }
+
+        // 실제 요청 로직
+        if (!IS_FAKE_MODE) {
+            try {
+                const response = await fetch(`${API_BASE_URL}/problems/${projectId}/${currentProblem.problemId}`, {
+                    method: 'POST',
+                    headers: {
+                    'Content-Type': 'application/json',
+                    "Authorization": `Bearer ${user.token}`
+                    },
+                    body: JSON.stringify({ answer: userAnswer })
+                });
+                if (!response.ok) {
+                    throw new Error(`서버 에러: ${response.status}`);
+                }
+                const result = await response.json();
+                console.log("정답 제출 응답:", result);
+                const isCorrect = result.data.isCorrect;
+            
+                // localStorage의 user 객체 업데이트: answerList, correctList (프로젝트별)
+                const userData = JSON.parse(localStorage.getItem("user")) || {};
+                if (!userData.answerList) userData.answerList = {};
+                if (!userData.correctList) userData.correctList = {};
+            
+                const projKey = project.projectId;
+                if (!userData.answerList[projKey]) {
+                    userData.answerList[projKey] = [];
+                }
+                if (!userData.correctList[projKey]) {
+                    userData.correctList[projKey] = [];
+                }
+                // 기존에 제출한 답이 있다면 제거
+                userData.answerList[projKey] = userData.answerList[projKey].filter(item => item.problemId !== currentProblem.problemId);
+                userData.correctList[projKey] = userData.correctList[projKey].filter(item => item.problemId !== currentProblem.problemId);
+            
+                userData.answerList[projKey].push({ problemId: currentProblem.problemId, answer: userAnswer });
+                userData.correctList[projKey].push({ problemId: currentProblem.problemId, isCorrect });
+            
+                localStorage.setItem("user", JSON.stringify(userData));
+                window.dispatchEvent(new Event("storageChange"));
+            
+                alert(`정답 제출 완료. 정답이 ${isCorrect ? "맞습니다" : "틀립니다"}.`);
+            } catch (err) {
+                console.error("정답 제출 중 오류:", err);
+                alert("정답 제출 중 오류가 발생했습니다.");
+            }
+        } 
+        // 테스트용 로직
+        else {
+            setTimeout(() => {
+                // 가짜 응답: 현재 문제의 정답(currentProblem.answer)과 비교하여 정답 여부 결정
+                const simulatedResponse = {
+                  data: {
+                    projectId: project.projectId,
+                    problemId: currentProblem.problemId,
+                    isCorrect: currentProblem.answer === userAnswer
+                  },
+                  code: 200,
+                  message: "OK"
+                };
+                const isCorrect = simulatedResponse.data.isCorrect;
+          
+                // localStorage 업데이트: 프로젝트별 answerList, correctList
+                const userData = JSON.parse(localStorage.getItem("user")) || {};
+                if (!userData.answerList) userData.answerList = {};
+                if (!userData.correctList) userData.correctList = {};
+          
+                const projKey = project.projectId;
+                if (!userData.answerList[projKey]) userData.answerList[projKey] = [];
+                if (!userData.correctList[projKey]) userData.correctList[projKey] = [];
+          
+                // 기존 제출한 답이 있다면 제거
+                userData.answerList[projKey] = userData.answerList[projKey].filter(item => item.problemId !== currentProblem.problemId);
+                userData.correctList[projKey] = userData.correctList[projKey].filter(item => item.problemId !== currentProblem.problemId);
+          
+                // 새 답 추가
+                userData.answerList[projKey].push({ problemId: currentProblem.problemId, answer: userAnswer });
+                userData.correctList[projKey].push({ problemId: currentProblem.problemId, isCorrect });
+          
+                localStorage.setItem("user", JSON.stringify(userData));
+                window.dispatchEvent(new Event("storageChange"));
+          
+                alert(`정답 제출 완료. 정답이 ${isCorrect ? "맞습니다" : "틀립니다"}.`);
+            }, 1000);
+        }
+    };    
+
 
     if (!project) {
         return <p>해당 프로젝트를 찾을 수 없습니다.</p>;
     }
+
+    // 현재 보여줄 문제
+    const currentProblem = problems[currentProblemIndex];
 
     return (
         <div className='project-container'>
@@ -152,27 +265,56 @@ export default function Project() {
                     <img src='/images/downloadicon.png' alt='download' style={{ width: "40px", height: "auto" }}/>
                 </button>
             </div>
-            <div className='project-content'>
-                {/* 질문 카드 */}
-                <div className='questionCard'>
-                    <div className='question-content'>
-                        <div className='arrow-left'>{"<"}</div>
-                        <div className='question-wrapper'>
-                            <div>
-                                문제
+
+            {error && <p className="error-message">{error}</p>}
+
+            <div className="project-content">
+                {problems.length > 0 ? (
+                    <div className="questionCard">
+                        <div className="question-content">
+                        <div className="arrow-left" onClick={handlePrev}>{"<"}</div>
+                        <div className="question-wrapper">
+                            <div className="problem-title">
+                                문제 {currentProblem.problemId}. {currentProblem.problemTitle}
                             </div>
-                            <div>
-                                선택지
-                            </div>
-                            <div>
-                                답 적는 칸
-                                <input/>
-                            </div>
+                            {/* 문제 유형에 따라 입력 필드 다르게 표시 */}
+                            {currentProblem.problemType === "객관식" ? (
+                                <div className="problem-options">
+                                    {currentProblem.options.map((option, index) => {
+                                    // 객관식은 순서대로 a, b, c, d로 매핑
+                                    const letter = String.fromCharCode(97 + index); // 97은 'a'
+                                    return (
+                                        <label key={index} className="option-label">
+                                        <input
+                                            type="radio"
+                                            name={`problem-${currentProblem.problemId}`}
+                                            value={letter}
+                                            onChange={(e) => setUserAnswer(e.target.value)}
+                                        />
+                                        {letter}. {option}
+                                        </label>
+                                    );
+                                    })}
+                                </div>
+                                ) : (
+                                <div className="problem-input">
+                                    <input
+                                    type="text"
+                                    placeholder="정답 입력"
+                                    value={userAnswer}
+                                    onChange={(e) => setUserAnswer(e.target.value)}
+                                    />
+                                </div>
+                                )}
                         </div>
-                        <div className='arrow-right'>{">"}</div>
+                        <div className="arrow-right" onClick={handleNext}>{">"}</div>
+                        </div>
+                        <button className="submit-answer-button" onClick={handleSubmitAnswer}>정답 제출</button>
                     </div>
-                    <button className='submit-answer-button'>정답 제출</button>
-                </div>
+                    ) : (
+                    <p>문제가 없습니다.</p>
+                )}
+
                 {/* 정답 카드 */}
                 <div className='answerCard'>
                     <div>
