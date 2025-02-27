@@ -1,0 +1,28 @@
+
+.homeLoggedIn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%; 
+    text-align: center;
+}
+
+
+.titleMessage {
+    font-size: 27px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px; 
+}
+
+.subMessage {
+    display: flex;
+    flex-direction: row;
+    align-items: center; 
+    justify-content: center; 
+    gap: 10px; 
+    font-size: 18px;
+    color: #555;
+}
+

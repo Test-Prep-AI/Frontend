@@ -1,0 +1,54 @@
+/* 기본 설정 */
+.question {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 30px;
+    
+    flex: 1; /* 부모 크기만큼 자동 확장 */
+    /* box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); */
+    overflow-y: auto; /* 내부 컨텐츠가 넘칠 경우 스크롤 허용 */
+
+    /* 스크롤바 숨기기 (크롬, 사파리, 엣지) */
+    scrollbar-width: none;  /* 파이어폭스 */
+    -ms-overflow-style: none;  /* IE, Edge */
+}
+
+/* 스크롤바 스타일 */
+.question::-webkit-scrollbar {
+    display: none; /* 크롬, 사파리, 엣지에서 스크롤바 숨기기 */
+}
+
+/* 제목 스타일 */
+.questionTitle {
+    text-align: center;
+}
+
+
+/* 파일 업로드 섹션 */
+.uploadPreview {
+    display: flex;  
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 700px;
+    height: 150px;
+    background-color: #E5F1FF;
+    border-radius: 50px; 
+    cursor: pointer;
+    /* border: 2px dashed #B0C4DE; */
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.uploadPreview.active {
+    /* border: 2px dashed #4A90E2; */
+    background-color: #D6EBFF;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.15);
+    transform: scale(1.01);
+    transition: transform 0.3s ease-in-out;
+}
+
+.uploadPreviewMessage {
+    margin: 5px;
+}

@@ -1,18 +1,8 @@
 import React from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom';
 
-function PrivateRoute({ component: Component, roles, ...rest }) {
-    return (
-        <Route {...rest} render={props => {
-            if (!localStorage.getItem('token')) {
-                // not logged in so redirect to login page with the return url
-                return <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
-            }
+export default function PrivateRoute({ element }) {
+    const user = JSON.parse(localStorage.getItem("user")); // 로그인 여부 확인
 
-            // logged in so return component
-            return <Component {...props} />
-        }} />
-    );
+    return user ? element : <Navigate to="/login" replace />;
 }
-
-export { PrivateRoute };

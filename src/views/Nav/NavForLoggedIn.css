@@ -1,0 +1,116 @@
+.nav {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.nav .text {
+    color: white;
+    font-size: 20px;
+    font-weight: 1000;
+    text-shadow: 0px 1px 3px gray;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.navContainer {
+    height: 100%;
+    width: 100%;
+}
+
+.logoWrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+
+.listtext {
+    color: white;
+    font-size: 20px;
+    font-weight: 1000;
+    text-shadow: 0px 1px 3px gray;
+    margin-top: 10px;
+}
+
+.profileWrap, .newWrap, .listWrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+.divider {
+    width: 80%;
+    border: none;
+    height: 1px;
+    background-color: white;
+}
+
+/* 버튼 리스트 스타일 */
+.buttonList {
+    min-height: 100px;
+    max-height: 180px; /* 최대 높이 지정 */
+    overflow-y: auto; /* 내용이 많으면 스크롤 생성 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    margin-top: 10px;
+    padding: 10px;
+    width: 80%;
+    height: 100%;
+}
+
+/* 스크롤바 스타일 (Chrome, Edge, Safari) */
+.buttonList::-webkit-scrollbar {
+    width: 6px;
+}
+
+.buttonList::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 10px;
+}
+
+.buttonList::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+/* 버튼 스타일 */
+.navButton {
+    width: 95%;
+    padding: 8px;
+    border: none;
+    border-radius: 30px;
+    background-color: #A0C4F5;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.navButton:hover {
+    background-color: #8EB4E8;
+}
+
+.logoutButton {
+    width: 85%;
+    color: gray;
+    font-size: 14px;
+    text-align: center;
+    cursor: pointer;
+    text-decoration: underline;
+    margin-top: 15px;
+}
+
+.logoutButton:hover {
+    color: black;
+}
+
+.createButton {
+    cursor: pointer;
+}
