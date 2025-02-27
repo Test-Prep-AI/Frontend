@@ -149,7 +149,7 @@
 }
 
 .radioStyle {
-    gap: 5px; /* 라디오와 라벨 텍스트 간격 */
+    gap: 20px; /* 라디오와 라벨 텍스트 간격 */
     font-size: 0.95rem;
     margin:0px 10px 0px 10px;
 }
@@ -164,7 +164,7 @@
     background-color: transparent;
     cursor: pointer;
     position: relative;
-    margin-right: 3px;
+    margin-right: 10px;
     outline: none;
     transition: border-color 0.2s;
 }
@@ -197,7 +197,7 @@
 }
 
 .extra-section p {
-    font-size: larger;
+    font-size: x-large;
 }
 
 .input-box {
