@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import LoadingScreen from './LoadingScreen';
 import DoneScreen from './DoneScreen';
 import QuestionForm from './QuestionForm';
-import { IS_FAKE_MODE } from '../../config';
+import { IS_FAKE_MODE, API_BASE_URL } from '../../config';
 
 export default function Question() {
     // 요청상태: idle/loading/done/error
@@ -110,7 +110,7 @@ export default function Question() {
                     throw new Error("토큰이 없습니다.");
                 }
                     
-                const response = await fetch("/questions/question", {
+                const response = await fetch(`${API_BASE_URL}/questions/question`, {
                     method: "POST",
                     headers: {
                         "Authorization": `Bearer ${token}`  
