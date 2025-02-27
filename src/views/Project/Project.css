@@ -91,43 +91,44 @@
     font-size: 1rem;
   }
   
-  .submit-answer-button {
+
+/* 정답 버튼 */
+.buttonWrap {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.buttonWrap button {
     display: block;
     margin: 0 auto;
-    background-color: #A0C4F5;
-    border: none;
     border-radius: 20px;
     padding: 10px 20px;
-    color: #fff;
     font-size: 0.95rem;
     cursor: pointer;
     transition: background-color 0.3s;
-  }
-  
-  .submit-answer-button:hover {
+}
+
+.submit-answer-button {
+    background-color: #A0C4F5;
+    color: #fff;
+    border: none;
+}
+.submit-answer-button:hover {
     background-color: #8EB4E8;
-  }
+}
+
+.show-answer-button {
+    color: #4d4d4d;
+    background-color: #F8FAFC;
+    border-color: #8EB4E8;
+}
   
   /* 정답 카드 내부 */
   .answerCard p {
     margin: 0;
     color: #555;
     line-height: 1.6;
-  }
-  
-
-  /* 모든 문제 카드를 감싸는 컨테이너 */
-.questionCardsContainer {
-    position: relative;
-  }
-  
-  /* 기본적으로 모든 questionCard는 숨김 처리 */
-  .questionCard {
-    display: none;
-  }
-  
-  /* active 클래스가 있는 카드만 보이게 설정 */
-  .questionCard.active {
-    display: block;
   }
   
