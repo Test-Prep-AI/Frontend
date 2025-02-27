@@ -11,13 +11,12 @@ export default function Project() {
     const projectList = user.projectList || [];
     const project = projectList.find(p => p.projectId === parseInt(projectId, 10));
 
-    // 문제 목록
+    // 문제 목록, 에러, 현재 문제 인덱스, 사용자 답안, 제출 결과 메시지
     const [problems, setProblems] = useState([]);
     const [error, setError] = useState('');
-    // 현재 보여줄 문제의 인덱스
     const [currentProblemIndex, setCurrentProblemIndex] = useState(0);
-    // 사용자가 입력한 답 (객관식은 "a", "b", "c", "d", 단답형/서술형은 텍스트)
     const [userAnswer, setUserAnswer] = useState('');
+    const [submissionResult, setSubmissionResult] = useState("");
 
     /* 문제 목록 불러오기 요청 */
     useEffect(() => {
@@ -38,10 +37,10 @@ export default function Project() {
                 }
                 return response.json();
             })
-            .then(data => {
+            .then(result => {
                 // 응답 데이터에서 problemList 저장 (없으면 빈 배열)
-                setProblems(data.problemList || []);
-                console.log('문제 목록 저장 완료:', data.problemList);
+                setProblems(result.data.problemList || []);
+                console.log('문제 목록 저장 완료:', result.data.problemList);
             })
             .catch(err => {
                 console.error("문제 목록 요청 실패:", err);
@@ -203,7 +202,10 @@ export default function Project() {
                 localStorage.setItem("user", JSON.stringify(userData));
                 window.dispatchEvent(new Event("storageChange"));
             
-                alert(`정답 제출 완료. 정답이 ${isCorrect ? "맞습니다" : "틀립니다"}.`);
+                // 객관식과 단답형 문제일 때만 결과 메시지 출력
+                if (currentProblem.problemType === "객관식" || currentProblem.problemType === "단답형") {
+                    setSubmissionResult(isCorrect ? "정답이 맞습니다." : "정답이 틀립니다.");
+                }
             } catch (err) {
                 console.error("정답 제출 중 오류:", err);
                 alert("정답 제출 중 오류가 발생했습니다.");
@@ -244,7 +246,10 @@ export default function Project() {
                 localStorage.setItem("user", JSON.stringify(userData));
                 window.dispatchEvent(new Event("storageChange"));
           
-                alert(`정답 제출 완료. 정답이 ${isCorrect ? "맞습니다" : "틀립니다"}.`);
+                // 객관식과 단답형 문제일 때만 결과 메시지 출력
+                if (currentProblem.problemType === "객관식" || currentProblem.problemType === "단답형") {
+                    setSubmissionResult(isCorrect ? "정답이 맞습니다." : "정답이 틀립니다.");
+                }
             }, 1000);
         }
     };    
@@ -279,37 +284,49 @@ export default function Project() {
                             </div>
                             {/* 문제 유형에 따라 입력 필드 다르게 표시 */}
                             {currentProblem.problemType === "객관식" ? (
-                                <div className="problem-options">
-                                    {currentProblem.options.map((option, index) => {
-                                    // 객관식은 순서대로 a, b, c, d로 매핑
-                                    const letter = String.fromCharCode(97 + index); // 97은 'a'
-                                    return (
-                                        <label key={index} className="option-label">
+                                    <div className="problem-options">
+                                        {currentProblem.options.map((option, index) => {
+                                            const letter = String.fromCharCode(97 + index);
+                                            return (
+                                                <label key={index} className="option-label">
+                                                    <input
+                                                        type="radio"
+                                                        name={`problem-${currentProblem.problemId}`}
+                                                        value={letter}
+                                                        onChange={(e) => setUserAnswer(e.target.value)}
+                                                    />
+                                                    {letter}. {option}
+                                                </label>
+                                            );
+                                        })}
+                                    </div>
+                                ) : currentProblem.problemType === "단답형" ? (
+                                    <div className="problem-input">
                                         <input
-                                            type="radio"
-                                            name={`problem-${currentProblem.problemId}`}
-                                            value={letter}
+                                            type="text"
+                                            placeholder="정답 입력"
+                                            value={userAnswer}
                                             onChange={(e) => setUserAnswer(e.target.value)}
                                         />
-                                        {letter}. {option}
-                                        </label>
-                                    );
-                                    })}
-                                </div>
+                                    </div>
                                 ) : (
-                                <div className="problem-input">
-                                    <input
-                                    type="text"
-                                    placeholder="정답 입력"
-                                    value={userAnswer}
-                                    onChange={(e) => setUserAnswer(e.target.value)}
-                                    />
-                                </div>
+                                    // 서술형 문제의 경우에는 입력 필드를 표시하지만 결과 메시지는 출력하지 않음.
+                                    <div className="problem-input">
+                                        <input
+                                            type="text"
+                                            placeholder="정답 입력"
+                                            value={userAnswer}
+                                            onChange={(e) => setUserAnswer(e.target.value)}
+                                        />
+                                    </div>
                                 )}
                         </div>
                         <div className="arrow-right" onClick={handleNext}>{">"}</div>
                         </div>
                         <button className="submit-answer-button" onClick={handleSubmitAnswer}>정답 제출</button>
+                        {((currentProblem.problemType === "객관식" || currentProblem.problemType === "단답형") && submissionResult) && (
+                            <div className="submission-result">{submissionResult}</div>
+                        )}
                     </div>
                     ) : (
                     <p>문제가 없습니다.</p>

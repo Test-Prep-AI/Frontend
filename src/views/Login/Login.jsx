@@ -33,7 +33,7 @@ export default function Login() {
         
                 if (response.status === 200) {
                     const userData = {
-                        token: result.accessToken
+                        token: result.data.accessToken
                     };
                     localStorage.setItem("user", JSON.stringify(userData)); // token, username, projectList
                     console.log("로그인 성공");
@@ -44,7 +44,7 @@ export default function Login() {
                         {
                         method: "GET",
                         headers: {
-                            "Authorizaton": `Bearer ${token}`
+                            "Authorization": `Bearer ${token}`
                         }
                     });
                     if (!infoResponse.ok) {
