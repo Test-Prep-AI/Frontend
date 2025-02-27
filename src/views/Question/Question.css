@@ -1,9 +1,37 @@
+/* 처음에는 `defaultSection`만 보이도록 설정 */
+/* .settings-section, 
+.extra-section, 
+.edit-btn {
+    display: none;
+} */
+
+/* 스크롤 시 아래 섹션이 점점 보이도록 설정 */
+/* .fade-in.visible {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
+} */
+
+/* 스크롤 그라데이션 효과 */
+.question::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 50px;
+    /* background: linear-gradient(to top, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0)); */
+    pointer-events: none;
+}
+
+
 /* 기본 설정 */
 .question {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 30px;
+    margin: 80px;
     
     flex: 1; /* 부모 크기만큼 자동 확장 */
     /* box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); */
@@ -12,6 +40,9 @@
     /* 스크롤바 숨기기 (크롬, 사파리, 엣지) */
     scrollbar-width: none;  /* 파이어폭스 */
     -ms-overflow-style: none;  /* IE, Edge */
+
+    color: #4D4D4D;
+    font-weight: 600;
 }
 
 /* 스크롤바 스타일 */
@@ -19,13 +50,25 @@
     display: none; /* 크롬, 사파리, 엣지에서 스크롤바 숨기기 */
 }
 
+
 /* 제목 스타일 */
 .questionTitle {
     text-align: center;
+    font-weight:800;
+    font-size: 20px;
+    margin: 50px;
+}
+
+.questionTitle p {
+    margin: 10px 0;
 }
 
 
 /* 파일 업로드 섹션 */
+.uploadSection {
+    margin: 30px;
+}
+
 .uploadPreview {
     display: flex;  
     flex-direction: column;
@@ -43,7 +86,7 @@
 
 .uploadPreview.active {
     /* border: 2px dashed #4A90E2; */
-    background-color: #D6EBFF;
+    /* background-color: #D6EBFF; */
     box-shadow: 0 10px 15px rgba(0, 0, 0, 0.15);
     transform: scale(1.01);
     transition: transform 0.3s ease-in-out;
@@ -51,4 +94,150 @@
 
 .uploadPreviewMessage {
     margin: 5px;
+    font-size: large;
 }
+
+/* 개수, 난이도 설정 섹션 */
+.settings-section {
+    display: flex;
+    flex-direction: row;
+    gap: 100px;
+    margin: 30px 0px;
+    font-size: 17px;
+}
+
+.difficulty, .exam-type {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.label {
+    margin: 30px 0px;
+}
+
+/* 개수 설정 섹션 */
+.count-group {
+    display:flex;
+    flex-direction: column;    
+    gap: 0.5rem;
+}
+
+.numberInput {
+    width: 50px;
+    margin: 0px 5px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 4px;
+    text-align: center;
+    outline: none;
+    font-size: 0.9rem;
+    background-color: #f9f9f9;
+    transition: box-shadow 0.2s;
+}
+
+.numberInput:focus {
+    box-shadow: 0 0 4px rgba(0, 132, 255, 0.4);
+    background-color: #fff;
+}
+
+/* 난이도 설정 섹션 */
+.radio-group {
+    display:flex;
+    flex-direction: column;    
+    gap: 0.5rem;
+}
+
+.radioStyle {
+    gap: 5px; /* 라디오와 라벨 텍스트 간격 */
+    font-size: 0.95rem;
+    margin:0px 10px 0px 10px;
+}
+
+/* 커스텀 라디오 */
+.radioStyle[type="radio"] {
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+    background-color: transparent;
+    cursor: pointer;
+    position: relative;
+    margin-right: 3px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.radioStyle[type="radio"]:hover {
+    border-color: #999;
+}
+
+.radioStyle[type="radio"]:checked {
+    border-color: #8CB4E2;        /* 원 둘레 색상 */
+    background-color: #8CB4E2;    /* 안쪽 색상 */
+}
+
+.radioStyle[type="radio"]:checked::after {
+    content: "";
+    position: absolute;
+    top: 4px; 
+    left: 4px; 
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: #fff;       /* 가운데 흰 점 */
+}
+  
+.extra-section {
+    margin: 50px 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.input-box {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 20px 0px;
+}
+  
+.input-box input {
+    width: 600px;
+    height: 30px;
+    padding: 10px 20px;
+    border: 1px solid #ddd;
+    border-radius: 30px;
+    outline: none;
+    background-color: #f9f9f9;
+    transition: box-shadow 0.2s;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.input-box input:focus {
+    box-shadow: 0 0 4px rgba(0, 132, 255, 0.4);
+    background-color: #fff;
+}
+  
+.edit-btn {
+    margin: 20px 0px;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 30px;
+  
+    background-color: #71A1DA; 
+    color: #fff;             
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+  
+    /* 살짝 그림자 */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.edit-btn:hover {
+    transform: translateY(-2px);
+}
+  
