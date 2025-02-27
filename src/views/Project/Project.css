@@ -1,0 +1,117 @@
+/* 전체 컨테이너 */
+.project-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    /* 부모의 높이를 꽉 채우고 싶다면? */
+    height: 100vh;  /* 또는 부모 컨테이너가 이미 flex:1 로 채워질 경우 100% */
+    box-sizing: border-box;
+    padding: 50px;
+    /* 만약 상위 레이아웃에서 이미 할당한 공간이 있다면, calc() 등을 써서 조절 */
+  }
+  
+  /* 헤더: 프로젝트명 + 다운로드 버튼 */
+  .project-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .project-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+    margin-left: 10px;
+  }
+  
+  .download-button {
+    background-color: #A0C4F5;
+    border: none;
+    border-radius: 30px;
+    padding:5px;
+    color: #fff;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .download-button:hover {
+    background-color: #8EB4E8;
+  }
+  
+  /* 메인 콘텐츠 영역 */
+  .project-content {
+    /* 남은 공간을 전부 차지하도록 flex 설정 */
+    flex: 1;               
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    overflow-y: auto;      /* 세로 스크롤 가능 */
+    padding-right: 10px;   
+    /* 아래처럼 min-height 또는 max-height 지정 가능 */
+    /* min-height: 0; */
+    /* max-height: calc(100vh - 200px); */
+  }
+  
+  /* 공통 카드 스타일 */
+  .questionCard,
+  .answerCard {
+    flex: 1;
+    background-color: #fff;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  }
+  
+  /* 질문 카드 내부 */
+  .question-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px; /* 정답 제출 버튼과의 간격 */
+  }
+  
+  .arrow-left,
+  .arrow-right {
+    font-size: 2rem;
+    color: #666;
+    cursor: pointer;
+    margin: 0 10px;
+  }
+  
+  .question-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* 문제 내용 스타일 */
+    color: #333;
+    font-size: 1rem;
+  }
+  
+  .submit-answer-button {
+    display: block;
+    margin: 0 auto;
+    background-color: #A0C4F5;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    color: #fff;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .submit-answer-button:hover {
+    background-color: #8EB4E8;
+  }
+  
+  /* 정답 카드 내부 */
+  .answerCard p {
+    margin: 0;
+    color: #555;
+    line-height: 1.6;
+  }
+  
