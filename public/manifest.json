@@ -3,37 +3,27 @@
   "name": "Test Prep",
   "icons": [
     {
-      "src": "favicon.ico",
+      "src": "images/logosmall.ico",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
     },
     {
-      "src": "logo192.png",
+      "src": "images/logosmall.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    },
+    {
+      "src": "images/profile.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    },
+    {
+      "src": "images/navcreateicon.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "logo512.png",
-      "type": "image/png",
-      "sizes": "512x512"
-    },
-    {
-      "src": "logosmall.png",
-      "type": "image/png",
-      "sizes": "512x512"
-    },
-    {
-      "src": "profile.png",
-      "type": "image/png",
-      "sizes": "512x512"
-    },
-    {
-      "src": "navcreateicon.png",
-      "type": "image/png",
-      "sizes": "192x192"
-    },
-    {
-      "src": "createicon.png",
+      "src": "images/createicon.png",
       "type": "image/png",
       "sizes": "192x192"
     }

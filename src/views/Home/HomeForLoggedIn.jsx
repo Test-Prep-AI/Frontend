@@ -10,7 +10,7 @@ export default function HomeForLoggedIn() {
         </div>
         <div className="subMessage">
             <p>왼쪽의</p>
-            <img src='/createicon.png'/>
+            <img src='/images/createicon.png'/>
             <p>버튼을 눌러 문제를 생성하세요.</p>
         </div>
     </div>

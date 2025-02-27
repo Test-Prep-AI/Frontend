@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import './Question.css';
 import LoadingScreen from './LoadingScreen';
 import DoneScreen from './DoneScreen';
 import QuestionForm from './QuestionForm';
@@ -105,6 +104,10 @@ export default function Question() {
         // try {
         //     const user = JSON.parse(localStorage.getItem("user")) || {};
         //     const token = user.token;
+
+        //     if (!token) {
+        //         throw new Error("토큰이 없습니다.");
+        //     }
                 
         //     const response = await fetch("/questions/question", {
         //         method: "POST",
@@ -113,8 +116,20 @@ export default function Question() {
         //         },
         //         body: formData
         //     });
+
+        //     if (!response.ok) {
+        //         throw new Error(`서버 에러: ${response.status}`);
+        //     }
     
         //     const result = await response.json();
+
+        //     if (result?.data?.projectList) {
+        //         user.projectList = result.data.projectList;
+        //         localStorage.setItem("user", JSON.stringify(user));
+        //     } else {
+        //         console.warn("projectList가 응답 데이터에 없습니다.");
+        //     }
+
         //     console.log("서버 응답:", result);
         //     setResponseData(result);
         //     setRequestStatus("done");
@@ -129,12 +144,41 @@ export default function Question() {
               success: true,
               message: "문제 생성 성공",
               data: {
-                fileName: fileName,
-                types: [mcqCount, shortCount, essayCount],
-                level: difficulty,
-                message: message || ""
-              }
+                "currentProjectId" : 1,
+                "projectList" : [
+                    {
+                        "projectId" : 1,
+                        "projectName" : "클라우드"
+                    },
+                    {
+                        "projectId" : 2,
+                        "projectName" : "알고리즘"	
+                    },
+                    {
+                        "projectId" : 3,
+                        "projectName" : "사과"	
+                    },
+                    {
+                        "projectId" : 4,
+                        "projectName" : "펭구"	
+                    },
+                    {
+                        "projectId" : 5,
+                        "projectName" : "노란색"	
+                    },
+                    {
+                        "projectId" : 6,
+                        "projectName" : "힝"	
+                    }
+                ]
+            }
             };
+
+            const user = JSON.parse(localStorage.getItem("user")) || {};
+            user.projectList = simulatedResponse.data.projectList;
+            localStorage.setItem("user", JSON.stringify(user));
+            window.dispatchEvent(new Event('storageChange'));
+
             setResponseData(simulatedResponse);
             setRequestStatus("done");
           }, 2000);
@@ -148,7 +192,7 @@ export default function Question() {
 
     if (requestStatus === "error") {
         return (
-          <div className="error-screen">
+          <div className="errorScreen" style={{display:"flex", justifyContent:"center"}}>
             <p>오류가 발생했습니다. 다시 시도해주세요.</p>
           </div>
         );

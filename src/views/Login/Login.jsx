@@ -24,12 +24,12 @@ export default function Login() {
             username: "구름이",
             token: "fake-token-123",
             projectList: [
-                { projetId: 1, name: "네트워크" }, 
-                { projetId: 2, name: "알고리즘" },
-                { projetId: 1, name: "자바" }, 
-                { projetId: 2, name: "자바스크립트" },
-                { projetId: 1, name: "깃" }, 
-                { projetId: 2, name: "파이썬" }
+                { projectId: 1, projectName: "네트워크" }, 
+                { projectId: 2, projectName: "알고리즘" },
+                { projectId: 3, projectName: "자바" }, 
+                { projectId: 4, projectName: "자바스크립트" },
+                { projectId: 5, projectName: "깃" }, 
+                { projectId: 6, projectName: "파이썬" }
             ]
         };
 
@@ -37,6 +37,7 @@ export default function Login() {
         if (email === fakeUser.email && password === fakeUser.password) {
             localStorage.setItem("user", JSON.stringify(fakeUser)); // 가짜 로그인 저장
             console.log("로그인 성공, 유저네임: " + fakeUser.username);
+            window.dispatchEvent(new Event("storageChange"));
             navigate("/"); // 로그인 후 메인 페이지로 이동
         } else {
             setErrorMessage("이메일 또는 비밀번호가 틀렸습니다."); // 로그인 실패 메시지
@@ -68,6 +69,7 @@ export default function Login() {
         //         localStorage.setItem("user", JSON.stringify(userData)); // token, username, projectList
     
         //         console.log("로그인 성공, 유저네임: " + result.username);
+        //         window.dispatchEvent(new Event("storageChange"));
         //         navigate("/");
         //     } else {
         //         if (response.status === 404) {

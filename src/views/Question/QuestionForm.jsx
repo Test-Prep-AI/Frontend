@@ -2,24 +2,24 @@ import React from 'react';
 import './QuestionForm.css';
 
 export default function QuestionForm({
-  fileName,
-  isActive,
-  handleFileChange,
-  handleDragStart,
-  handleDragOver,
-  handleDragEnd,
-  handleDrop,
-  mcqCount,
-  shortCount,
-  essayCount,
-  totalLimit,
-  handleCountChange,
-  difficulty,
-  handleDifficultyChange,
-  message,
-  handleMessageChange,
-  handleCreate,
-  visibleSections
+    fileName,
+    isActive,
+    handleFileChange,
+    handleDragStart,
+    handleDragOver,
+    handleDragEnd,
+    handleDrop,
+    mcqCount,
+    shortCount,
+    essayCount,
+    totalLimit,
+    handleCountChange,
+    difficulty,
+    handleDifficultyChange,
+    message,
+    handleMessageChange,
+    handleCreate,
+    visibleSections
 }) {
     return (
         <div className='questionForm'>
@@ -36,7 +36,7 @@ export default function QuestionForm({
                         onDragLeave={handleDragEnd}  // dragend 핸들러 추가
                         onDrop={handleDrop}
                     >
-                        <img src='/uploadicon.png' alt="파일 업로드" style={{ width: "90px", height: "auto" }}/>
+                        <img src='/images/uploadicon.png' alt="파일 업로드" style={{ width: "90px", height: "auto" }}/>
                         <p className="uploadPreviewMessage">
                             {fileName ? `선택된 파일: ${fileName}` : "클릭 또는 드롭하여 pdf 파일을 업로드하세요."}
                         </p>

@@ -53,8 +53,10 @@
 
 /* 버튼 리스트 스타일 */
 .buttonList {
-    min-height: 100px;
-    max-height: 180px; /* 최대 높이 지정 */
+    width: 80%;
+    height: 170px;
+    /* min-height: 100px;
+    max-height: 180px; */
     overflow-y: auto; /* 내용이 많으면 스크롤 생성 */
     display: flex;
     flex-direction: column;
@@ -62,8 +64,6 @@
     gap: 5px;
     margin-top: 10px;
     padding: 10px;
-    width: 80%;
-    height: 100%;
 }
 
 /* 스크롤바 스타일 (Chrome, Edge, Safari) */
