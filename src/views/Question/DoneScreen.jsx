@@ -10,7 +10,7 @@ export default function DoneScreen({ responseData }) {
   const handleGoToProject = () => {
     const projectId = responseData?.data?.currentProjectId;
     if (projectId) {
-      navigate(`/projcet/${projectId}`);
+      navigate(`/project/${projectId}`);
     } else {
       console.log("프로젝트 ID가 없습니다.");
       navigate(`/question`);
