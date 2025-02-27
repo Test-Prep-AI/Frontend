@@ -1,0 +1,1 @@
+export const IS_FAKE_MODE = process.env.REACT_APP_FAKE_MODE === "true";

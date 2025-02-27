@@ -1,5 +1,4 @@
-
-.homeLoggedIn {
+.homeLoggedIn, .homeGuest {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -10,10 +9,14 @@
 
 
 .titleMessage {
-    font-size: 27px;
+    font-size: xx-large;
     font-weight: bold;
     color: #333;
     margin-bottom: 20px; 
+}
+
+.titleMessage p {
+    margin: 20px 0;
 }
 
 .subMessage {
@@ -26,3 +29,23 @@
     color: #555;
 }
 
+.loginButton {
+    margin: 20px 0px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 30px;
+  
+    background-color: #8CB4E2; 
+    color: #fff;             
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+  
+    /* 살짝 그림자 */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.loginButton:hover {
+    transform: translateY(-2px);
+}

@@ -1,10 +1,16 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import './NavForGuest.css';
 
 export default function NavForGuest() {
+  const navigate = useNavigate();
+  const handleGoToHome = () => {
+    navigate(`/`);
+  }
 
   return (
     <div className='nav' style={{ display:"flex" }}>
-      <img src='/images/logobig.png' style={{ width: "130px", height: "auto", marginTop:"70px" }}/>
+      <img src='/images/logobig.png' className='logoImg' onClick={handleGoToHome}/>
     </div>
   )
 }

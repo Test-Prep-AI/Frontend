@@ -53,14 +53,14 @@ export default function NavForLoggedIn() {
                     <img src='/images/logosmall.png' alt='logo' style={{ width: "70px", height: "auto" }}/>
                 </div>
                 <div className='profileWrap'>
-                    <img src='/images/profile.png' alt='profile' style={{ width: "120px", height: "auto" }}/>
+                    <img src='/images/profile.png' alt='profile' style={{ width: "125px", height: "auto" }}/>
                     <div className='text'>{ username }</div>
                 </div>
                 <hr className='divider' />
                 <div className='newWrap'>
                     <div className='text'>New</div>
                     <div className='createButton' onClick={handleGoToQuestion}>
-                        <img src='/images/navcreateicon.png' alt='create' />
+                        <img src='/images/questionline.png' alt='question' style={{ width: "30px", height: "auto" }}/>
                     </div>
                 </div>
                 <hr className='divider' />

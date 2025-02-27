@@ -1,6 +1,7 @@
 .nav {
     height: 100%;
     width: 100%;
+    min-width: 200px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -26,6 +27,7 @@
     align-items: center;
     margin-top: 30px;
     margin-bottom: 10px;
+    cursor: pointer;
 }
 
 .listtext {
@@ -49,6 +51,21 @@
     border: none;
     height: 1px;
     background-color: white;
+}
+
+/* new 버튼 */
+.createButton {
+    background-color: #71A1DA;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 6px;
+    border-radius: 100%;
+    margin-bottom: 5px;
+}
+
+.createButton:hover {
+    background-color: #4C89BF;
 }
 
 /* 버튼 리스트 스타일 */
