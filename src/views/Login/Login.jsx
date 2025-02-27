@@ -13,7 +13,67 @@ export default function Login() {
         e.preventDefault();
         setErrorMessage('');
         
-        if (IS_FAKE_MODE) {
+        if (!IS_FAKE_MODE) { // 실제 요청 로직
+            try {
+                const response = await fetch(
+                    "/login",
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                            useremail: email,
+                            password: password,
+                        }),
+                    }
+                );
+        
+                const result = await response.json();
+        
+                if (response.status === 200) {
+                    const userData = {
+                        token: result.accessToken
+                    };
+                    localStorage.setItem("user", JSON.stringify(userData)); // token, username, projectList
+                    console.log("로그인 성공");
+
+                    const token = userData.token;
+                    const infoResponse = await fetch("/user/info", {
+                        method: "GET",
+                        headers: {
+                            "Authorizaton": `Bearer ${token}`
+                        }
+                    });
+                    if (!infoResponse.ok) {
+                        throw new Error(`User info fetch error: ${infoResponse.status}`);
+                    }
+                    const infoResult = await infoResponse.json();
+
+                    // localstorage 업데이트
+                    const user = JSON.parse(localStorage.getItem("user")) || {};
+                    user.username = infoResult.data.username;
+                    user.projectList = infoResult.data.projectList;
+                    localStorage.setItem('user', JSON.stringify(user));
+                    
+                    // 변경 사항을 알리기 위한 custom 이벤트 발생
+                    window.dispatchEvent(new Event("storageChange"));
+                    navigate("/");
+                } else {
+                    if (response.status === 404) {
+                        setErrorMessage("없는 유저입니다."); // 없는 유저
+                    } else if (response.status === 401) {
+                        setErrorMessage("로그인에 실패했습니다."); // 비밀번호 오류
+                    } else {
+                        setErrorMessage("로그인에 실패했습니다."); // 기타 에러
+                    }
+                    console.error("로그인 실패: ", result);
+                }
+            } catch (error) {
+                setErrorMessage("서버 오류가 발생했습니다.");
+            }
+        } 
+        else { // 테스트용 로직
             const fakeUser = {
                 email: "test",
                 password: "123",
@@ -37,48 +97,6 @@ export default function Login() {
                 navigate("/"); // 로그인 후 메인 페이지로 이동
             } else {
                 setErrorMessage("이메일 또는 비밀번호가 틀렸습니다."); // 로그인 실패 메시지
-            }
-        } else { // 실제 요청 로직
-            try {
-                const response = await fetch(
-                    "/login",
-                    {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify({
-                            useremail: email,
-                            password: password,
-                        }),
-                    }
-                );
-        
-                const result = await response.json();
-        
-                if (response.status === 200) {
-                    const userData = {
-                        token: result.token,
-                        username: result.username,
-                        projectList: result.projectList
-                    };
-                    localStorage.setItem("user", JSON.stringify(userData)); // token, username, projectList
-        
-                    console.log("로그인 성공, 유저네임: " + result.username);
-                    window.dispatchEvent(new Event("storageChange"));
-                    navigate("/");
-                } else {
-                    if (response.status === 404) {
-                        setErrorMessage("없는 유저입니다."); // 없는 유저
-                    } else if (response.status === 401) {
-                        setErrorMessage("로그인에 실패했습니다."); // 비밀번호 오류
-                    } else {
-                        setErrorMessage("로그인에 실패했습니다."); // 기타 에러
-                    }
-                    console.error("로그인 실패: ", result);
-                }
-            } catch (error) {
-                setErrorMessage("서버 오류가 발생했습니다.");
             }
         }
     }

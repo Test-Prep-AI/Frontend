@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import LoadingScreen from './LoadingScreen';
 import DoneScreen from './DoneScreen';
 import QuestionForm from './QuestionForm';
+import { IS_FAKE_MODE } from '../../config';
 
 export default function Question() {
     // 요청상태: idle/loading/done/error
@@ -100,88 +101,90 @@ export default function Question() {
             console.log(`${pair[0]}: ${pair[1]}`);
         }
         
-        // 요청
-        // try {
-        //     const user = JSON.parse(localStorage.getItem("user")) || {};
-        //     const token = user.token;
-
-        //     if (!token) {
-        //         throw new Error("토큰이 없습니다.");
-        //     }
-                
-        //     const response = await fetch("/questions/question", {
-        //         method: "POST",
-        //         headers: {
-        //             "Authorization": `Bearer ${token}`  
-        //         },
-        //         body: formData
-        //     });
-
-        //     if (!response.ok) {
-        //         throw new Error(`서버 에러: ${response.status}`);
-        //     }
+        if (!IS_FAKE_MODE) { // 실제 요청 로직
+            try {
+                const user = JSON.parse(localStorage.getItem("user")) || {};
+                const token = user.token;
     
-        //     const result = await response.json();
-
-        //     if (result?.data?.projectList) {
-        //         user.projectList = result.data.projectList;
-        //         localStorage.setItem("user", JSON.stringify(user));
-        //     } else {
-        //         console.warn("projectList가 응답 데이터에 없습니다.");
-        //     }
-
-        //     console.log("서버 응답:", result);
-        //     setResponseData(result);
-        //     setRequestStatus("done");
-        // } catch (error) {
-        //     console.error("파일 업로드 실패:", error);
-        //     setRequestStatus("error");
-        // }
-
-        // 테스트
-        setTimeout(() => {
-            const simulatedResponse = {
-              success: true,
-              message: "문제 생성 성공",
-              data: {
-                "currentProjectId" : 1,
-                "projectList" : [
-                    {
-                        "projectId" : 1,
-                        "projectName" : "클라우드"
+                if (!token) {
+                    throw new Error("토큰이 없습니다.");
+                }
+                    
+                const response = await fetch("/questions/question", {
+                    method: "POST",
+                    headers: {
+                        "Authorization": `Bearer ${token}`  
                     },
-                    {
-                        "projectId" : 2,
-                        "projectName" : "알고리즘"	
-                    },
-                    {
-                        "projectId" : 3,
-                        "projectName" : "사과"	
-                    },
-                    {
-                        "projectId" : 4,
-                        "projectName" : "펭구"	
-                    },
-                    {
-                        "projectId" : 5,
-                        "projectName" : "노란색"	
-                    },
-                    {
-                        "projectId" : 6,
-                        "projectName" : "힝"	
-                    }
-                ]
+                    body: formData
+                });
+    
+                if (!response.ok) {
+                    throw new Error(`서버 에러: ${response.status}`);
+                }
+        
+                const result = await response.json();
+    
+                if (result?.data?.projectList) {
+                    user.projectList = result.data.projectList;
+                    localStorage.setItem("user", JSON.stringify(user));
+                    window.dispatchEvent(new Event('storageChange'));
+                } else {
+                    console.warn("projectList가 응답 데이터에 없습니다.");
+                }
+    
+                console.log("서버 응답:", result);
+                setResponseData(result);
+                setRequestStatus("done");
+            } catch (error) {
+                console.error("파일 업로드 실패:", error);
+                setRequestStatus("error");
             }
-            };
-
-            const user = JSON.parse(localStorage.getItem("user")) || {};
-            user.projectList = simulatedResponse.data.projectList;
-            localStorage.setItem("user", JSON.stringify(user));
-            window.dispatchEvent(new Event('storageChange'));
-
-            setResponseData(simulatedResponse);
-            setRequestStatus("done");
-          }, 2000);
+        }
+        else { // 테스트용 로직
+            setTimeout(() => {
+                const simulatedResponse = {
+                  success: true,
+                  message: "문제 생성 성공",
+                  data: {
+                    "currentProjectId" : 1,
+                    "projectList" : [
+                        {
+                            "projectId" : 1,
+                            "projectName" : "클라우드"
+                        },
+                        {
+                            "projectId" : 2,
+                            "projectName" : "알고리즘"	
+                        },
+                        {
+                            "projectId" : 3,
+                            "projectName" : "사과"	
+                        },
+                        {
+                            "projectId" : 4,
+                            "projectName" : "펭구"	
+                        },
+                        {
+                            "projectId" : 5,
+                            "projectName" : "노란색"	
+                        },
+                        {
+                            "projectId" : 6,
+                            "projectName" : "힝"	
+                        }
+                    ]
+                }
+                };
+    
+                const user = JSON.parse(localStorage.getItem("user")) || {};
+                user.projectList = simulatedResponse.data.projectList;
+                localStorage.setItem("user", JSON.stringify(user));
+                window.dispatchEvent(new Event('storageChange'));
+    
+                setResponseData(simulatedResponse);
+                setRequestStatus("done");
+              }, 2000);
+        }
 
     };
 
