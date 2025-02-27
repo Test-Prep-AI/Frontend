@@ -213,7 +213,7 @@ export default function Project() {
         updateUserResults(problem, answer, isCorrect);
 
         if (problem.problemType === "객관식" || problem.problemType === "단답형") {
-          setResults(prev => ({ ...prev, [problem.problemId]: isCorrect ? "정답이 맞습니다." : "정답이 틀립니다." }));
+          setResults(prev => ({ ...prev, [problem.problemId]: isCorrect ? "정답이 맞습니다." : "정답이 아닙니다." }));
         } else if (problem.problemType === "서술형") {
             setResults(prev => ({ ...prev, [problem.problemId]: "해설을 확인하세요." }));
         }
@@ -226,7 +226,7 @@ export default function Project() {
         const isCorrect = problem.answer === answer;
         updateUserResults(problem, answer, isCorrect);
         if (problem.problemType === "객관식" || problem.problemType === "단답형") {
-            setResults(prev => ({ ...prev, [problem.problemId]: isCorrect ? "정답이 맞습니다." : "정답이 틀립니다." }));
+            setResults(prev => ({ ...prev, [problem.problemId]: isCorrect ? "정답이 맞습니다." : "정답이 아닙니다." }));
         } else if (problem.problemType === "서술형") {
             setResults(prev => ({ ...prev, [problem.problemId]: "해설을 확인하세요." }));
         }
@@ -268,57 +268,57 @@ export default function Project() {
                 <div className="question-content">
                   <div className="question-wrapper">
                     <div className="problem-title">
-                      문제 {problem.problemId}. {problem.problemTitle}
+                        문제 {problem.problemId}. {problem.problemTitle}
                     </div>
                     {problem.problemType === "객관식" ? (
-                      <div className="problem-options">
-                        {problem.options && Object.entries(problem.options).length > 0 ? (
-                          Object.entries(problem.options)
-                            .sort((a, b) => a[0].localeCompare(b[0]))
-                            .map(([key, value]) => (
-                              <label key={key} className="option-label">
-                                <input
-                                  type="radio"
-                                  name={`problem-${problem.problemId}`}
-                                  value={key}
-                                  checked={answers[problem.problemId] === key}
-                                  onChange={(e) => handleAnswerChange(problem.problemId, e.target.value)}
-                                />
-                                {key}. {value}
-                              </label>
-                            ))
-                        ) : (
-                          <p>선택지가 없습니다.</p>
-                        )}
-                      </div>
+                        <div className="problem-options">
+                            {problem.options && Object.entries(problem.options).length > 0 ? (
+                            Object.entries(problem.options)
+                                .sort((a, b) => a[0].localeCompare(b[0]))
+                                .map(([key, value]) => (
+                                <label key={key} className="option-label">
+                                    <input
+                                    type="radio"
+                                    name={`problem-${problem.problemId}`}
+                                    value={key}
+                                    checked={answers[problem.problemId] === key}
+                                    onChange={(e) => handleAnswerChange(problem.problemId, e.target.value)}
+                                    />
+                                    {key}. {value}
+                                </label>
+                                ))
+                            ) : (
+                            <p>선택지가 없습니다.</p>
+                            )}
+                        </div>
                     ) : (
-                      <div className="problem-input">
-                        <input
-                          type="text"
-                          placeholder="정답 입력"
-                          value={answers[problem.problemId] || ""}
-                          onChange={(e) => handleAnswerChange(problem.problemId, e.target.value)}
-                        />
-                      </div>
+                        <div className="problem-input">
+                            <input
+                            type="text"
+                            placeholder="정답 입력"
+                            value={answers[problem.problemId] || ""}
+                            onChange={(e) => handleAnswerChange(problem.problemId, e.target.value)}
+                            />
+                        </div>
                     )}
                   </div>
                 </div>
                 <div className="buttonWrap">
-                  <button className="submit-answer-button" onClick={() => handleSubmitAnswer(problem)}>
-                    정답 제출
-                  </button>
-                  <button className="show-answer-button" onClick={() => toggleShowAnswer(problem.problemId)}>
-                    {visibleAnswers[problem.problemId] ? "정답 숨기기" : "정답 보기"}
-                  </button>
+                    <button className="submit-answer-button" onClick={() => handleSubmitAnswer(problem)}>
+                        정답 제출
+                    </button>
+                    <button className="show-answer-button" onClick={() => toggleShowAnswer(problem.problemId)}>
+                        {visibleAnswers[problem.problemId] ? "숨기기" : "정답 보기"}
+                    </button>
                 </div>
                 {results[problem.problemId] && (
                     <div className="submission-result">{results[problem.problemId]}</div>
                 )}
                 {visibleAnswers[problem.problemId] && (
-                  <div className="answerCard">
-                    <div>정답: {problem.answer}</div>
-                    <div>해설: {problem.description}</div>
-                  </div>
+                    <div className="answerCard">
+                        <div>정답: {problem.answer}</div>
+                        <div>해설: {problem.description}</div>
+                    </div>
                 )}
               </div>
             ))}
