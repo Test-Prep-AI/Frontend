@@ -16,7 +16,7 @@ export default function Login() {
         if (!IS_FAKE_MODE) { // 실제 요청 로직
             try {
                 const response = await fetch(
-                    `${API_BASE_URL}/login`,
+                    `/login`,
                     {
                         method: "POST",
                         headers: {
