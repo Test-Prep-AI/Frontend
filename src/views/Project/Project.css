@@ -1,12 +1,12 @@
 /* 전체 컨테이너 */
 .project-container {
+    flex: 1;
     display: flex;
     flex-direction: column;
     width: 100%;
     /* 부모의 높이를 꽉 채우고 싶다면? */
     height: 100vh;  /* 또는 부모 컨테이너가 이미 flex:1 로 채워질 경우 100% */
     box-sizing: border-box;
-    padding: 50px;
     /* 만약 상위 레이아웃에서 이미 할당한 공간이 있다면, calc() 등을 써서 조절 */
   }
   
@@ -55,13 +55,21 @@
   }
   
   /* 공통 카드 스타일 */
-  .questionCard,
   .answerCard {
     flex: 1;
     background-color: #fff;
     border-radius: 20px;
     padding: 20px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  }
+
+  .questionCard{
+    background-color: #fff;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    margin-top: 30px;
+    padding: 40px;
   }
   
   /* 질문 카드 내부 */
@@ -84,12 +92,16 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
     /* 문제 내용 스타일 */
     color: #333;
     font-size: 1rem;
   }
+
+.problem-title {
+    margin-bottom: 20px;
+}
   
 
 /* 정답 버튼 */
@@ -97,15 +109,17 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-bottom: 30px;
 }
 
 .buttonWrap button {
     display: block;
-    margin: 0 auto;
     border-radius: 20px;
-    padding: 10px 20px;
-    font-size: 0.95rem;
+    padding: 8px 15px;
+    width: 90px;
+    font-size: 0.90rem;
     cursor: pointer;
     transition: background-color 0.3s;
 }
@@ -122,13 +136,38 @@
 .show-answer-button {
     color: #4d4d4d;
     background-color: #F8FAFC;
-    border-color: #8EB4E8;
 }
+.show-answer-button:hover {
+    background-color: #e5e9ec;
+}
+
   
-  /* 정답 카드 내부 */
-  .answerCard p {
+  /* 정답 카드  */
+
+
+.answerCard p {
     margin: 0;
     color: #555;
     line-height: 1.6;
+}
+  
+.submission-result {
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+    padding-left: 20px;
+}
+
+.problem-input input {
+    width: 100%;
+    padding: 12px 15px;  /* 세로/가로 여백 */
+    font-size: 1rem;
+    border: 2px solid #ccc;  /* 연한 회색 테두리 */
+    border-radius: 10px;     /* 둥근 모서리 */
+    outline: none;
+    transition: border-color 0.3s;
+    box-sizing: border-box;
   }
   
+  .problem-input input:focus {
+    border-color: #A0C4F5;  /* 포커스 시 테두리색 변경 */
+  }
