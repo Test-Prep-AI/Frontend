@@ -10,6 +10,7 @@ import NavForGuest from '../views/Nav/NavForGuest';
 import NavForLoggedIn from '../views/Nav/NavForLoggedIn';
 import Question from '../views/Question/Question';
 import './App.css';
+import Project from '../views/Project/Project';
 
 function App() {
   const [is_login, setis_login] = useState(false);
@@ -47,6 +48,8 @@ function App() {
               <Route path="/" element={is_login ? <HomeForLoggedIn /> : <HomeForGuest />} />
               <Route path="/login" element={is_login?<Navigate to="/" replace />:<Login />} />
               <Route path="/question" element={<PrivateRoute element={<Question />} />} />
+              <Route path="/project/:projectId" element={<PrivateRoute element={<Project />} />} />
+
             </Routes>
           </div>
         </div>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Login.css';
-import { IS_FAKE_MODE } from '../../config';
+import { IS_FAKE_MODE, API_BASE_URL } from '../../config';
 
 export default function Login() {
     const [email, setEmail] = useState('');
@@ -16,7 +16,7 @@ export default function Login() {
         if (!IS_FAKE_MODE) { // 실제 요청 로직
             try {
                 const response = await fetch(
-                    "/login",
+                    `${API_BASE_URL}/login`,
                     {
                         method: "POST",
                         headers: {
@@ -39,7 +39,9 @@ export default function Login() {
                     console.log("로그인 성공");
 
                     const token = userData.token;
-                    const infoResponse = await fetch("/user/info", {
+                    const infoResponse = await fetch(
+                        `${API_BASE_URL}/user/info`, 
+                        {
                         method: "GET",
                         headers: {
                             "Authorizaton": `Bearer ${token}`
